@@ -1,7 +1,7 @@
 package controller.command;
 
-import model.ShapeModel;
 import model.DrawableShape;
+import model.ShapeModel;
 import shape.Vertex;
 
 public class MoveCommand implements Command {

@@ -7,8 +7,10 @@ import drawable.Drawable;
 import model.*;
 
 import java.awt.*;
+import java.util.Observable;
+import java.util.Observer;
 
-public class DrawPanel extends JPanel implements AddedShapeObserver, RemovedShapeObserver, UpdatedShapeObserver {
+public class DrawPanel extends JPanel implements Observer {
 
     private final ShapeModel model;
     public static final Dimension SIZE = new Dimension(800, 544);
@@ -19,7 +21,7 @@ public class DrawPanel extends JPanel implements AddedShapeObserver, RemovedShap
         this.setMinimumSize(SIZE);
         this.setLayout(new BorderLayout());
 
-        subscribeToModel(model);
+        model.addObserver(this);
 
         new DrawPanelKeyHandler(controller, this);
         DrawPanelMouseHandler mouseHandler = new DrawPanelMouseHandler(this, controller);
@@ -32,12 +34,6 @@ public class DrawPanel extends JPanel implements AddedShapeObserver, RemovedShap
         addMouseWheelListener(mouseHandler);
     }
 
-    private void subscribeToModel(ShapeModel model) {
-        model.addAddedObserver(this);
-        model.addRemovedObserver(this);
-        model.addUpdatedObserver(this);
-    }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -47,17 +43,7 @@ public class DrawPanel extends JPanel implements AddedShapeObserver, RemovedShap
     }
 
     @Override
-    public void updateShapeAdded(DrawableShape shape) {
-        repaint();
-    }
-
-    @Override
-    public void updateShapeRemoved(DrawableShape shape) {
-        repaint();
-    }
-
-    @Override
-    public void updateShapesUpdated() {
+    public void update(Observable o, Object arg) {
         repaint();
     }
 }

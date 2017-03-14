@@ -3,8 +3,8 @@ package controller;
 import controller.command.Command;
 import controller.command.CommandComposite;
 import controller.command.MoveCommand;
-import model.ShapeModel;
 import model.DrawableShape;
+import model.ShapeModel;
 import shape.Vertex;
 
 import java.util.Collections;
