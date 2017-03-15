@@ -3,13 +3,13 @@ package controller;
 import shape.Vertex;
 
 
-final class DefaultState implements DrawPanelState {
+final class SelectOneState implements DrawPanelState {
 
     private final PositionHandler handler;
     private final DrawPanelController controller;
 
 
-    DefaultState(DrawPanelController controller, PositionHandler handler) {
+    SelectOneState(DrawPanelController controller, PositionHandler handler) {
         this.handler = handler;
         this.controller = controller;
     }
@@ -54,11 +54,23 @@ final class DefaultState implements DrawPanelState {
 
     @Override
     public void stateModifierKeyPressed() {
-        controller.setState(new SelectionState(controller, handler));
+        controller.setState(new SelectManyState(controller, handler));
     }
 
     @Override
     public void stateModifierKeyReleased() {
     }
+
+	@Override
+	public void mouseMoved(int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void rightMouseButtonPressed(int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 

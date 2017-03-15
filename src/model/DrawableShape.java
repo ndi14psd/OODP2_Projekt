@@ -26,6 +26,10 @@ public final class DrawableShape implements Shape, Drawable {
     public void setColor(Color color) {
         this.color = color;
     }
+    
+    public Color getColor() {
+    	return color;
+    }
 
     public void setSelected(boolean isSelected) {
         this.isSelected = isSelected;
@@ -36,8 +40,8 @@ public final class DrawableShape implements Shape, Drawable {
     }
 
     @Override
-    public DrawableShape moveCenter(Vertex distance) {
-        shape = shape.moveCenter(distance);
+    public DrawableShape setCenter(Vertex distance) {
+        shape = shape.setCenter(distance);
         return this;
     }
 

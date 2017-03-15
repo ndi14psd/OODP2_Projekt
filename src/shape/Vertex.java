@@ -1,9 +1,10 @@
 package shape;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class Vertex  {
+public final class Vertex implements Serializable {
 
     private final double x;
     private final double y;

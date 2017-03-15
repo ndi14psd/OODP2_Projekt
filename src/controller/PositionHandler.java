@@ -81,7 +81,7 @@ final class PositionHandler {
 
     private void moveShapes(List<DrawableShape> shapes, Vertex distance) {
         for (DrawableShape shape : shapes) {
-            model.updateShape(shape, s -> s.moveCenter(distance));
+            model.updateShape(shape, s -> s.setCenter(s.getCenter().add(distance)));
         }
     }
 }

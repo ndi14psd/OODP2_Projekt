@@ -1,6 +1,7 @@
 package view;
 
 import controller.DrawPanelController;
+import controller.MainController;
 import model.ShapeModel;
 
 import javax.swing.*;
@@ -8,7 +9,7 @@ import javax.swing.*;
 public class Program {
     public static void main(String[] args) {
         ShapeModel model = new ShapeModel();
-        DrawPanelController controller = new DrawPanelController(model);
+        MainController controller = new MainController(model);
 
         SwingUtilities.invokeLater(() -> new MainFrame(model, controller));
     }

@@ -5,7 +5,7 @@ import java.util.List;
 
 public final class Circle implements Shape {
 
-    private Vertex center;
+	private Vertex center;
     private final double radius;
 
     private Circle(Vertex center, double radius) {
@@ -48,8 +48,8 @@ public final class Circle implements Shape {
     }
 
     @Override
-    public Shape moveCenter(Vertex vertex) {
-        return get(center.add(vertex), this.radius);
+    public Shape setCenter(Vertex vertex) {
+        return get(vertex, this.radius);
     }
 
     @Override

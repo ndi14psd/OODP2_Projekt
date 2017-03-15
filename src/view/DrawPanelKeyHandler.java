@@ -18,7 +18,7 @@ class DrawPanelKeyHandler {
     DrawPanelKeyHandler(DrawPanelController controller, DrawPanel panel) {
         this.controller = controller;
         controlPressed = false;
-        inputMap = panel.getInputMap();
+        inputMap = panel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
         actionMap = panel.getActionMap();
 
         addAction(KeyStroke.getKeyStroke("control CONTROL"), "ctrl pressed",
@@ -59,6 +59,14 @@ class DrawPanelKeyHandler {
                         controller.redo();
                     }
                 });
+        
+        addAction(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "delete", 
+        		new AbstractAction() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						controller.deleteSelected();
+					}
+				});
     }
 
     private void addAction(KeyStroke keyStroke, String actionName, Action action) {

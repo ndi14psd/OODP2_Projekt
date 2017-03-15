@@ -1,8 +1,9 @@
 package shape;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface Shape {
+public interface Shape extends Serializable {
 	
 	List<Vertex> getVertices();
 	
@@ -10,7 +11,7 @@ public interface Shape {
 
     Vertex getCenter();
 
-    Shape moveCenter(Vertex vertex);
+    Shape setCenter(Vertex vertex);
 
     void accept(ShapeVisitor visitor);
 }

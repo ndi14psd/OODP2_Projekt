@@ -22,7 +22,14 @@ public class DrawPanelMouseHandler extends MouseAdapter {
         if(SwingUtilities.isLeftMouseButton(e)) {
             controller.leftMouseButtonPressed(e.getX(), e.getY());
             panel.repaint();
+        } else if(SwingUtilities.isRightMouseButton(e)) {
+        	controller.rightMouseButtonPressed(e.getX(), e.getY());
         }
+    }
+    
+    @Override
+    public void mouseMoved(MouseEvent e) {
+    	controller.mouseMoved(e.getX(), e.getY());
     }
 
     @Override

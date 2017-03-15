@@ -2,7 +2,8 @@ package controller;
 
 import controller.command.Command;
 import controller.command.CommandComposite;
-import controller.command.MoveCommand;
+import controller.command.DeleteShapeCommand;
+import controller.command.MoveShapeCommand;
 import model.DrawableShape;
 import model.ShapeModel;
 import shape.Vertex;
@@ -18,17 +19,17 @@ public final class DrawPanelController {
     private final CommandHistory history;
     private DrawPanelState state;
 
-    public DrawPanelController(ShapeModel model) {
-        this.model = model;
+    DrawPanelController(MainController mainController) {
+        this.model = mainController.getShapeModel();
         handler = new PositionHandler(model);
-        state = new DefaultState(this, handler);
-        history = new CommandHistory();
+        state = new SelectOneState(this, handler);
+        history = mainController.getHistory();
     }
 
     void addMovementToHistory(List<DrawableShape> shapes, Vertex distance) {
         if(distance != Vertex.at(0, 0)) {
             List<Command> commands = shapes.stream()
-                    .map(s ->  new MoveCommand(model, s, distance))
+                    .map(s ->  new MoveShapeCommand(model, s, distance))
                     .collect(Collectors.toList());
             history.addToHistory(new CommandComposite(commands));
         }
@@ -36,6 +37,19 @@ public final class DrawPanelController {
 
     void addMovementToHistory(DrawableShape shape, Vertex distance) {
         addMovementToHistory(Collections.singletonList(shape), distance);
+    }
+    
+    public void deleteSelected() {
+    	List<DrawableShape> selected = handler.getSelected();
+    	if(!selected.isEmpty()) {
+    		Command deleteSelected = new DeleteShapeCommand(model, selected);
+    		deleteSelected.execute();
+    		history.addToHistory(deleteSelected);    		
+    	}
+    }
+    
+    DrawPanelState getDefaultState() {
+    	return new SelectOneState(this, handler);
     }
 
     public void redo() {
@@ -77,4 +91,12 @@ public final class DrawPanelController {
     public void stateModifierKeyReleased() {
         state.stateModifierKeyReleased();
     }
+
+	public void mouseMoved(int x, int y) {
+		state.mouseMoved(x, y);
+	}
+
+	public void rightMouseButtonPressed(int x, int y) {
+		state.rightMouseButtonPressed(x, y);
+	}
 }
