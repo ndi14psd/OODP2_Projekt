@@ -1,16 +1,17 @@
 package controller;
 
+import model.MainModel;
 import model.ShapeModel;
 
 public class ToolbarController {
 	
-	private final ShapeModel model;
+	private final MainModel model;
 	private final DrawPanelController drawPanelController;
 	private final CommandHistory history;
 
-	ToolbarController(MainController mainController) {
+	ToolbarController(MainModel model, MainController mainController) {
 		this.drawPanelController = mainController.getDrawPanelController();
-		this.model = mainController.getShapeModel();
+		this.model = model;
 		this.history = mainController.getHistory();
 	}
 

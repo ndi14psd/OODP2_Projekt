@@ -43,7 +43,7 @@ public class ShapeModel extends Observable {
 
     public void addShape(DrawableShape shape) {
         if(shape != null) {
-            shapes.add(0, shape);
+            shapes.add(shape);
             updateObservers();
         }
     }

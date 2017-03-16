@@ -1,5 +1,11 @@
 package controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import model.DrawableShape;
+import shape.Shape;
+import shape.ShapeComposite;
 import shape.Vertex;
 
 class SelectManyState implements DrawPanelState {
@@ -60,12 +66,6 @@ class SelectManyState implements DrawPanelState {
 
 	@Override
 	public void mouseMoved(int x, int y) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void rightMouseButtonPressed(int x, int y) {
 		// TODO Auto-generated method stub
 		
 	}

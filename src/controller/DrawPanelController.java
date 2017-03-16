@@ -4,7 +4,9 @@ import controller.command.Command;
 import controller.command.CommandComposite;
 import controller.command.DeleteShapeCommand;
 import controller.command.MoveShapeCommand;
+import model.AttributeModel;
 import model.DrawableShape;
+import model.MainModel;
 import model.ShapeModel;
 import shape.Vertex;
 
@@ -14,22 +16,24 @@ import java.util.stream.Collectors;
 
 public final class DrawPanelController {
 
-    private final ShapeModel model;
+    private final ShapeModel shapeModel;
     private final PositionHandler handler;
     private final CommandHistory history;
     private DrawPanelState state;
+	private AttributeModel attributeModel;
 
-    DrawPanelController(MainController mainController) {
-        this.model = mainController.getShapeModel();
-        handler = new PositionHandler(model);
+    DrawPanelController(ShapeModel shapeModel, AttributeModel attributeModel, CommandHistory history) {
+		this.shapeModel = shapeModel;
+		this.attributeModel = attributeModel; 
+        handler = new PositionHandler(shapeModel);
         state = new SelectOneState(this, handler);
-        history = mainController.getHistory();
+        this.history = history;
     }
 
     void addMovementToHistory(List<DrawableShape> shapes, Vertex distance) {
         if(distance != Vertex.at(0, 0)) {
             List<Command> commands = shapes.stream()
-                    .map(s ->  new MoveShapeCommand(model, s, distance))
+                    .map(s ->  new MoveShapeCommand(shapeModel, s, distance))
                     .collect(Collectors.toList());
             history.addToHistory(new CommandComposite(commands));
         }
@@ -42,7 +46,7 @@ public final class DrawPanelController {
     public void deleteSelected() {
     	List<DrawableShape> selected = handler.getSelected();
     	if(!selected.isEmpty()) {
-    		Command deleteSelected = new DeleteShapeCommand(model, selected);
+    		Command deleteSelected = new DeleteShapeCommand(shapeModel, selected);
     		deleteSelected.execute();
     		history.addToHistory(deleteSelected);    		
     	}
@@ -97,6 +101,7 @@ public final class DrawPanelController {
 	}
 
 	public void rightMouseButtonPressed(int x, int y) {
-		state.rightMouseButtonPressed(x, y);
+		DrawableShape shape = handler.shapeAtPoint(Vertex.at(x, y)).orElse(null);
+		attributeModel.setShape(shape);
 	}
 }

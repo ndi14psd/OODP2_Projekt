@@ -45,11 +45,7 @@ public final class Vertex implements Serializable {
     public Vertex subtract(Vertex v) {
         return Vertex.subtract(this, v);
     }
-
-    public Vertex negative() {
-        return Vertex.at(-x, -y);
-    }
-
+    
     @Override
     public String toString() {
         return String.format("[x: %f, y: %f]", x, y);

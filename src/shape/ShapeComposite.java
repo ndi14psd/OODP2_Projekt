@@ -7,7 +7,8 @@ import java.util.function.IntBinaryOperator;
 import java.util.stream.Collectors;
 
 public final class ShapeComposite implements Shape {
-
+	private static final long serialVersionUID = 271681339315941445L;
+	
 	private final List<Shape> shapes;
 
 	public ShapeComposite() {

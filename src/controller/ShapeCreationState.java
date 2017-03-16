@@ -14,6 +14,7 @@ import java.util.function.Function;
 import controller.command.AddShapeCommand;
 import controller.command.Command;
 import model.DrawableShape;
+import model.MainModel;
 import model.ShapeModel;
 import shape.Circle;
 import shape.Shape;
@@ -23,34 +24,23 @@ import shape.Vertex;
 
 public class ShapeCreationState implements DrawPanelState {
 
-	public final static Map<String, Function<Vertex, DrawableShape>> SHAPE_MAKERS = new HashMap<>();
-
-	static {
-		SHAPE_MAKERS.put("circle", center -> new DrawableShape(ShapeFactory.getCircle(center, 50)));
-	}
-
-	private final ShapeModel model;
+	private final MainModel model;
 	private final String shapeName;
 	private final CommandHistory history;
 
-	public ShapeCreationState(ShapeModel model, CommandHistory history, String shapeName) {
+	public ShapeCreationState(MainModel model, CommandHistory history, String shapeName) {
 		this.model = model;
 		this.history = history;
-		this.shapeName = shapeName.toLowerCase();
+		this.shapeName = shapeName;
 	}
 
 	@Override
 	public void leftMouseButtonPressed(int x, int y) {
 		Vertex currentPosition = Vertex.at(x, y);
-		Shape shape = SHAPE_MAKERS.get(shapeName).apply(currentPosition);
-		DrawableShape drawableShape = new DrawableShape(shape);
-		Command added = new AddShapeCommand(model, drawableShape);
+		DrawableShape shape = model.getShapeMakerModel().getShape(shapeName, currentPosition);
+		Command added = new AddShapeCommand(model.getShapeModel(), shape);
 		added.execute();
 		history.addToHistory(added);
-	}
-
-	@Override
-	public void rightMouseButtonPressed(int x, int y) {
 	}
 
 	@Override

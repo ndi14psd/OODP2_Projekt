@@ -18,11 +18,11 @@ public class MoveShapeCommand implements Command {
 
     @Override
     public void execute() {
-        model.updateShape(shape, s -> s.setCenter(distance));
+        model.updateShape(shape, s -> s.setCenter(s.getCenter().add(distance)));
     }
 
     @Override
     public void undo() {
-        model.updateShape(shape, s -> s.setCenter(distance.negative()));
+        model.updateShape(shape, s -> s.setCenter(s.getCenter().subtract(distance)));
     }
 }

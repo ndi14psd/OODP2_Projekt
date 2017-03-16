@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import controller.ToolbarController;
 import model.ShapeFileReader;
+import model.ShapeCreatorModel;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class ToolbarPanel extends JPanel {
 	private final List<JButton> buttons;
 	private final ToolbarController controller;
 
-    public ToolbarPanel(ToolbarController controller) {
+    public ToolbarPanel(ShapeCreatorModel model, ToolbarController controller) {
         this.controller = controller;
 		this.setBackground(Color.DARK_GRAY);
         this.setMinimumSize(new Dimension(160, 544));
@@ -23,10 +24,10 @@ public class ToolbarPanel extends JPanel {
         
         buttons = new ArrayList<>();
         buttons.add(getDefaultButton());
-        buttons.add(getCreationButton("Circle"));
-       /* for(String shapeName : ShapeFileReader.SHAPE_MAKERS.keySet()) {
-        	buttons.add(getCreationButton(shapeName));
-        }*/
+        for (String name : model.getShapeNames()) {
+			buttons.add(getCreationButton(name));
+		}
+  
         buttons.forEach(this::add);
     }
     

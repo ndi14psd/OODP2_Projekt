@@ -10,8 +10,9 @@ import java.awt.*;
 import java.util.List;
 
 public final class DrawableShape implements Shape, Drawable {
-
-    private Shape shape;
+	private static final long serialVersionUID = -6422626670838075581L;
+	
+	private Shape shape;
     private double strokeWidth;
     private Color color;
     private boolean isSelected;
@@ -21,6 +22,20 @@ public final class DrawableShape implements Shape, Drawable {
         strokeWidth = 5;
         color = Color.BLACK;
         isSelected = false;
+    }
+    
+    public DrawableShape(DrawableShape drawableShape) {
+    	this(drawableShape.shape);
+    	this.color = drawableShape.color;
+    	this.strokeWidth = drawableShape.strokeWidth;
+    }
+    
+    public void setInnerShape(Shape shape) {
+    	this.shape = shape;
+    }
+    
+    public Shape getInnerShape() {
+    	return shape;
     }
 
     public void setColor(Color color) {
@@ -46,11 +61,11 @@ public final class DrawableShape implements Shape, Drawable {
     }
 
     @Override
-    public void draw(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
+    public void draw(Graphics graphics) {
+        Graphics2D g2 = (Graphics2D) graphics;
         g2.setStroke(new BasicStroke((float) strokeWidth));
-        g.setColor(isSelected? Color.CYAN : color);
-        ShapeDrawer.draw(g, shape);
+        graphics.setColor(isSelected? Color.CYAN : color);
+        ShapeDrawer.draw(graphics, shape);
     }
 
     @Override
@@ -72,4 +87,12 @@ public final class DrawableShape implements Shape, Drawable {
     public void accept(ShapeVisitor visitor) {
         shape.accept(visitor);
     }
+
+	public double getStrokeWidth() {
+		return strokeWidth;
+	}
+
+	public void setStrokeWidth(double strokeWidth) {
+		this.strokeWidth = strokeWidth;
+	}
 }

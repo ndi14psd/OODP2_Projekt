@@ -51,10 +51,14 @@ final class PositionHandler {
     }
 
     void setPressedShape(Vertex pressedPoint) {
-        pressedShape = model.getShapes().stream()
-                .filter(shape -> shape.hasPoint(pressedPoint))
-                .findFirst().orElse(null);
+        pressedShape = shapeAtPoint(pressedPoint).orElse(null);
     }
+
+	Optional<DrawableShape> shapeAtPoint(Vertex pressedPoint) {
+		return model.getShapes().stream()
+                .filter(shape -> shape.hasPoint(pressedPoint))
+                .findFirst();
+	}
 
     private void setDeselected(DrawableShape shape) {
         if (model.getShapes().contains(shape)) {

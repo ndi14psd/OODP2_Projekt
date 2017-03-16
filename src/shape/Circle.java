@@ -4,7 +4,8 @@ import java.util.Collections;
 import java.util.List;
 
 public final class Circle implements Shape {
-
+	private static final long serialVersionUID = -8822679556704420763L;
+	
 	private Vertex center;
     private final double radius;
 
