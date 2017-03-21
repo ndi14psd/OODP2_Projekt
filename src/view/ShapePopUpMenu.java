@@ -1,8 +1,6 @@
 package view;
 
 import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -11,16 +9,15 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 
-import controller.AttributeController;
-import model.Attribute;
-import model.AttributeModel;
+import controller.ShapeOptionController;
+import model.ShapePropertyModel;
 
-class AttributePopUpMenu extends JPopupMenu implements Observer {
+class ShapePopUpMenu extends JPopupMenu implements Observer {
 
-	private AttributeModel model;
-	private AttributeController controller;
+	private ShapePropertyModel model;
+	private ShapeOptionController controller;
 	
-	public AttributePopUpMenu(AttributeModel model, AttributeController controller) {
+	public ShapePopUpMenu(ShapePropertyModel model, ShapeOptionController controller) {
 		this.model = model;
 		this.controller = controller;
 		model.addObserver(this);
@@ -29,34 +26,29 @@ class AttributePopUpMenu extends JPopupMenu implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		this.removeAll();
-		if (model.getShape().isPresent()) {
-			add(createColorMenuItem());
-			add(createMenuItem(model.getBorderWidthAttribute()));
-			for (Attribute attribute : model.getAttributes()) {
-				add(createMenuItem(attribute));
-			}
+		
+		JMenuItem colorItem = new JMenuItem("Change color");
+		colorItem.addActionListener(action -> {
+			Color c = JColorChooser.showDialog(this, "Choose Color", Color.BLACK);
+			controller.setShapeColor(c);
+		});
+		add(colorItem);
+		
+		JMenuItem strokeItem = new JMenuItem("Change Stroke width");
+		strokeItem.addActionListener(action -> {
+			String input = JOptionPane.showInputDialog("Choose new stroke width");
+			controller.setShapeStrokeWidth(input);
+		});
+		add(strokeItem);
+		
+		for (String option : model.getShapeProperties()) {
+			JMenuItem item = new JMenuItem(option);
+			item.addActionListener(action -> {
+				controller.executeShapeOption(option, JOptionPane.showInputDialog("Change value"));
+			});
+			add(item);
 		}
 	}
 
-	private JMenuItem createColorMenuItem() {
-		JMenuItem colorItem = new JMenuItem("Color");
-		colorItem.addActionListener(action -> {
-			Color c = JColorChooser.showDialog(this, "Choose Color", Color.BLACK);
-			controller.setColor(c);
-		});
-		return colorItem;
-	}
 
-	private JMenuItem createMenuItem(Attribute attribute) {
-		JMenuItem item = new JMenuItem(attribute.getName());
-		item.addActionListener(createAttributeActionListener(attribute));
-		return item;
-	}
-
-	private ActionListener createAttributeActionListener(Attribute attribute) {
-		return action -> {
-			String answer = JOptionPane.showInputDialog("Change value", attribute.getValue());
-			controller.updateAttribute(attribute, answer);
-		};
-	}
 }

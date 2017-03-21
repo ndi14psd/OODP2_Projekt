@@ -4,12 +4,12 @@ public class MainModel {
 
 	private final ShapeModel shapeModel;
 	private final ShapeCreatorModel shapeMakerModel;
-	private final AttributeModel attributeModel;
+	private final ShapePropertyModel attributeModel;
 	
 	public MainModel() {
 		shapeMakerModel = new ShapeCreatorModel();
 		shapeModel = new ShapeModel();
-		attributeModel = new AttributeModel(shapeModel);
+		attributeModel = new ShapePropertyModel();
 	}
 	
 	public ShapeModel getShapeModel() {
@@ -20,7 +20,7 @@ public class MainModel {
 		return shapeMakerModel;
 	}
 	
-	public AttributeModel getAttributeModel() {
+	public ShapePropertyModel getAttributeModel() {
 		return attributeModel;
 	}
 }

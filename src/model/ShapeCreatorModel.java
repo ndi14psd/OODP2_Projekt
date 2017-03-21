@@ -3,20 +3,34 @@ package model;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Observable;
 import java.util.Set;
 import java.util.function.Function;
 
-import shape.ShapeFactory;
+import shape.Circle;
+import shape.Rectangle;
+import shape.Square;
 import shape.Vertex;
 
-public class ShapeCreatorModel {
+public class ShapeCreatorModel extends Observable {
 
 	private final Map<String, Function<Vertex, DrawableShape>> shapeMakers;
 
 	public ShapeCreatorModel() {
 		shapeMakers = new HashMap<>();
+		reinitialize();
+	}
+	
+	private void updateObservers() {
+		super.setChanged();
+		super.notifyObservers();
+	}
+	
+	public void reinitialize() {
+		shapeMakers.clear();
 		initializeDefault();
 		//initializeFromFiles();
+		updateObservers();
 	}
 	
 	public DrawableShape getShape(String shapeName, Vertex position) {
@@ -28,7 +42,9 @@ public class ShapeCreatorModel {
 	}
 	
 	private void initializeDefault() {
-		shapeMakers.put("Circle", center -> new DrawableShape(ShapeFactory.getCircle(center, 50)));
+		shapeMakers.put("Circle", center -> new DrawableShape(Circle.get(center, 50)));
+		shapeMakers.put("Square", center -> new DrawableShape(new Square(center, 50)));
+		shapeMakers.put("Rectangle", center -> new DrawableShape(new Rectangle(center, 75, 50)));
 	}
 	
 	private void initializeFromFiles() {

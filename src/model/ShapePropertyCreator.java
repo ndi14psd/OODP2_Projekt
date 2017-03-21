@@ -1,51 +1,56 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import shape.Circle;
+import shape.Rectangle;
+import shape.Shape;
 import shape.ShapeComposite;
 import shape.ShapeVisitor;
+import shape.Square;
 
-class AttributeCreator implements ShapeVisitor {
+class ShapePropertyCreator implements ShapeVisitor {
 
-	private final List<Attribute> attributes;
 	private ShapeModel model;
 	private DrawableShape shape;
-
-	private AttributeCreator(ShapeModel model, DrawableShape shape) {
+	
+	private final Map<String, Function<Double, Shape>> options;
+	
+	private ShapePropertyCreator(DrawableShape shape) {
 		this.model = model;
 		this.shape = shape;
-		attributes = new ArrayList<>();
+		options = new HashMap<>();
 	}
 
-	static List<Attribute> create(ShapeModel model, DrawableShape shape) {
-		AttributeCreator creator = new AttributeCreator(model, shape);
-		if(shape != null) {
-			shape.accept(creator);			
-		}
-
-		return creator.getAttributes();
-	}
-
-	private List<Attribute> getAttributes() {
-		return attributes;
+	static Map<String, Function<Double, Shape>> get(DrawableShape shape) {
+		ShapePropertyCreator creator = new ShapePropertyCreator(shape);
+		shape.accept(creator);
+		
+		
+		return creator.options;
 	}
 	
 	@Override
 	public void visit(ShapeComposite composite) {
-		System.out.println("neeej");
 	}
 
 	@Override
 	public void visit(Circle circle) {
-		Consumer<String> radiusUpdater = s -> {
-			double newRadius = Double.valueOf(s);
-			Circle newCircle = Circle.get(circle.getCenter(), newRadius);
-			model.updateShape(shape, drawableShape -> drawableShape.setInnerShape(newCircle));
-		};
-		attributes.add(new Attribute(String.valueOf(circle.getRadius()), "Radius", radiusUpdater));
+		options.put("Radius", input -> Circle.get(circle.getCenter(), input));
+	}
+
+	@Override
+	public void visit(Square square) {
+		
+	}
+
+	@Override
+	public void visit(Rectangle rectangle) {
+		
 	}
 	
 	

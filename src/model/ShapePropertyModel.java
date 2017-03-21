@@ -1,39 +1,38 @@
 package model;
 
-import java.awt.Color;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Optional;
+import java.util.Set;
+import java.util.function.Function;
 
-public class AttributeModel extends Observable {
-	
-	private final ShapeModel shapeModel;
+import shape.Shape;
+
+public class ShapePropertyModel extends Observable {
+
 	private DrawableShape currentShape;
+	private Map<String, Function<Double, Shape>> shapeProperties;
 
-	public AttributeModel(ShapeModel shapeModel) {
-		this.shapeModel = shapeModel;
+	public ShapePropertyModel() {
 		currentShape = null;
+		shapeProperties = new HashMap<>();
 	}
-		
+
+	public Shape getUpdatedProperty(String propertyName, double value) {
+		return shapeProperties.get(propertyName).apply(value);
+	}
+
 	public void setShape(DrawableShape shape) {
 		currentShape = shape;
+		shapeProperties = ShapePropertyCreator.get(shape);
 		updateObservers();
 	}
-	
-	public Attribute getColorAttribute() {
-		return new Attribute(currentShape.getColor().toString(), "Color",
-				rgbString -> currentShape.setColor(new Color(Integer.parseInt(rgbString))));
+
+	public Set<String> getShapeProperties() {
+		return shapeProperties.keySet();
 	}
-	
-	public Attribute getBorderWidthAttribute() {
-		return new Attribute(Double.toString(currentShape.getStrokeWidth()), "Stroke Width",
-				strokeWidthString -> currentShape.setStrokeWidth(Double.parseDouble(strokeWidthString)));
-	}
-	
-	public List<Attribute> getAttributes() {
-		return AttributeCreator.create(shapeModel, currentShape);
-	}
-	
+
 	private void updateObservers() {
 		super.setChanged();
 		super.notifyObservers();

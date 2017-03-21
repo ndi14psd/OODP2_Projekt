@@ -1,16 +1,12 @@
 package view;
 
-import controller.DrawPanelController;
-import model.Attribute;
-import model.AttributeModel;
-
-import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
+
+import javax.swing.SwingUtilities;
+
+import controller.DrawPanelController;
 
 public class DrawPanelMouseHandler extends MouseAdapter {
 

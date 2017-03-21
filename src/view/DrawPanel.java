@@ -1,16 +1,16 @@
 package view;
 
-import javax.swing.*;
-
-import controller.DrawPanelController;
-import drawable.Drawable;
-import model.*;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.Observable;
 import java.util.Observer;
+
+import javax.swing.JPanel;
+
+import controller.DrawPanelController;
+import drawable.Drawable;
+import model.ShapeModel;
 
 public class DrawPanel extends JPanel implements Observer {
 

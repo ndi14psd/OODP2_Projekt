@@ -1,18 +1,17 @@
 package controller;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import controller.command.Command;
 import controller.command.CommandComposite;
 import controller.command.DeleteShapeCommand;
 import controller.command.MoveShapeCommand;
-import model.AttributeModel;
 import model.DrawableShape;
-import model.MainModel;
 import model.ShapeModel;
+import model.ShapePropertyModel;
 import shape.Vertex;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public final class DrawPanelController {
 
@@ -20,11 +19,11 @@ public final class DrawPanelController {
     private final PositionHandler handler;
     private final CommandHistory history;
     private DrawPanelState state;
-	private AttributeModel attributeModel;
+	private ShapePropertyModel optionModel;
 
-    DrawPanelController(ShapeModel shapeModel, AttributeModel attributeModel, CommandHistory history) {
+    DrawPanelController(ShapeModel shapeModel, ShapePropertyModel optionModel, CommandHistory history) {
 		this.shapeModel = shapeModel;
-		this.attributeModel = attributeModel; 
+		this.optionModel = optionModel; 
         handler = new PositionHandler(shapeModel);
         state = new SelectOneState(this, handler);
         this.history = history;
@@ -54,6 +53,10 @@ public final class DrawPanelController {
     
     DrawPanelState getDefaultState() {
     	return new SelectOneState(this, handler);
+    }
+    
+    PositionHandler getPositionHandler() {
+    	return handler;
     }
 
     public void redo() {
@@ -102,6 +105,6 @@ public final class DrawPanelController {
 
 	public void rightMouseButtonPressed(int x, int y) {
 		DrawableShape shape = handler.shapeAtPoint(Vertex.at(x, y)).orElse(null);
-		attributeModel.setShape(shape);
+		optionModel.setShape(shape);
 	}
 }

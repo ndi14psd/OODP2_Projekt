@@ -1,25 +1,9 @@
 package controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
-
 import controller.command.AddShapeCommand;
 import controller.command.Command;
 import model.DrawableShape;
 import model.MainModel;
-import model.ShapeModel;
-import shape.Circle;
-import shape.Shape;
-import shape.ShapeComposite;
-import shape.ShapeFactory;
 import shape.Vertex;
 
 public class ShapeCreationState implements DrawPanelState {

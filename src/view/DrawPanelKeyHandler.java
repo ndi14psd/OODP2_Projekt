@@ -1,11 +1,17 @@
 package view;
 
-import controller.DrawPanelController;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+
+import controller.DrawPanelController;
 
 class DrawPanelKeyHandler {
 

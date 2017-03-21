@@ -1,7 +1,11 @@
 package controller;
 
+import java.util.List;
+
+import model.DrawableShape;
 import model.MainModel;
-import model.ShapeModel;
+import model.ShapeFileWriter;
+import shape.ShapeComposite;
 
 public class ToolbarController {
 	
@@ -21,6 +25,16 @@ public class ToolbarController {
 	
 	public void setDefaultMode() {
 		drawPanelController.setState(drawPanelController.getDefaultState());
+	}
+	
+	public void saveSelected(String shapeName) {
+		List<DrawableShape> selected = drawPanelController.getPositionHandler().getSelected();
+		ShapeComposite shape = new ShapeComposite();
+		for (DrawableShape drawableShape : selected) {
+			shape.addShape(drawableShape);
+		}
+		ShapeFileWriter.writeShapeToFile(shapeName, new DrawableShape(shape));
+		model.getShapeMakerModel().reinitialize();
 	}
 
 

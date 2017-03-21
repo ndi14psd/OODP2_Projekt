@@ -1,16 +1,19 @@
 package model;
 
-import drawable.Drawable;
-import drawable.ShapeDrawer;
-import shape.Vertex;
-import shape.Shape;
-import shape.ShapeVisitor;
-
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.List;
 
-public final class DrawableShape implements Shape, Drawable {
-	private static final long serialVersionUID = -6422626670838075581L;
+import drawable.Drawable;
+import drawable.ShapeDrawer;
+import shape.Shape;
+import shape.ShapeVisitor;
+import shape.Vertex;
+
+public final class DrawableShape implements Drawable, Shape {
+	private static final long serialVersionUID = -5101707247175075539L;
 	
 	private Shape shape;
     private double strokeWidth;
@@ -30,31 +33,26 @@ public final class DrawableShape implements Shape, Drawable {
     	this.strokeWidth = drawableShape.strokeWidth;
     }
     
-    public void setInnerShape(Shape shape) {
+	public void setInnerShape(Shape shape) {
     	this.shape = shape;
     }
     
     public Shape getInnerShape() {
     	return shape;
     }
-
-    public void setColor(Color color) {
+    
+	public void setColor(Color color) {
         this.color = color;
     }
     
-    public Color getColor() {
-    	return color;
-    }
-
-    public void setSelected(boolean isSelected) {
+	public void setSelected(boolean isSelected) {
         this.isSelected = isSelected;
     }
 
-    public boolean isSelected() {
+	public boolean isSelected() {
         return isSelected;
     }
 
-    @Override
     public DrawableShape setCenter(Vertex distance) {
         shape = shape.setCenter(distance);
         return this;
@@ -88,7 +86,7 @@ public final class DrawableShape implements Shape, Drawable {
         shape.accept(visitor);
     }
 
-	public double getStrokeWidth() {
+    public double getStrokeWidth() {
 		return strokeWidth;
 	}
 

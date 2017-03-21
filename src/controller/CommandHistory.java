@@ -1,8 +1,8 @@
 package controller;
 
-import controller.command.Command;
-
 import java.util.LinkedList;
+
+import controller.command.Command;
 
 class CommandHistory {
     private final LinkedList<Command> undoStack;

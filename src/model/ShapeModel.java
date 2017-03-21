@@ -1,15 +1,15 @@
 package model;
 
-import shape.Circle;
-import shape.ShapeComposite;
-import shape.ShapeFactory;
-import shape.Vertex;
-
-import java.awt.*;
+import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.function.Consumer;
+
+import shape.Circle;
+import shape.ShapeComposite;
+import shape.ShapeFactory;
+import shape.Vertex;
 
 public class ShapeModel extends Observable {
 

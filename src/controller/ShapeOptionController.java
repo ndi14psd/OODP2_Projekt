@@ -1,34 +1,39 @@
 package controller;
 
 import java.awt.Color;
-import java.util.function.Consumer;
 
-import model.Attribute;
-import model.AttributeModel;
 import model.ShapeModel;
+import model.ShapePropertyModel;
+import shape.Shape;
 
-public class AttributeController {
+public class ShapeOptionController {
 
-	private final AttributeModel attributeModel;
+	private final ShapePropertyModel optionModel;
 	private final ShapeModel shapeModel;
 
-	public AttributeController(ShapeModel shapeModel, AttributeModel attributeModel) {
+	public ShapeOptionController(ShapeModel shapeModel, ShapePropertyModel optionModel) {
 		this.shapeModel = shapeModel;
-		this.attributeModel = attributeModel;
+		this.optionModel = optionModel;
 	}
 	
-	public void setColor(Color color) {
-		attributeModel.getShape().ifPresent(shape -> {
-			int rgb = color.getRGB();
-			Consumer<String> colorSetter = attributeModel.getColorAttribute().getUpdater();
-			String stringRGB = Integer.toString(rgb);
-			shapeModel.updateShape(shape, s -> colorSetter.accept(stringRGB));
+	public void executeShapeOption(String option, String value) {
+		optionModel.getShape().ifPresent(shape -> {
+			double val = Double.valueOf(value);
+			Shape updatedProperty = optionModel.getUpdatedProperty(option, val);
+			shapeModel.updateShape(shape, s -> s.setInnerShape(updatedProperty));
 		});
 	}
 
-	public void updateAttribute(Attribute attribute, String stringValue) {
-		attributeModel.getShape().ifPresent(shape -> {
-			shapeModel.updateShape(shape, s -> attribute.getUpdater().accept(stringValue));
+	public void setShapeColor(Color color) {
+		optionModel.getShape().ifPresent(shape -> {
+			shapeModel.updateShape(shape, s -> s.setColor(color));
+		});
+	}
+
+	public void setShapeStrokeWidth(String strokeWidthValue) {
+		optionModel.getShape().ifPresent(shape -> {
+			double value = Double.valueOf(strokeWidthValue);
+			shapeModel.updateShape(shape, s -> s.setStrokeWidth(value));
 		});
 	}
 	

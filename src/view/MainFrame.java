@@ -1,13 +1,12 @@
 package view;
 
-import javax.swing.*;
+import java.awt.BorderLayout;
 
-import controller.DrawPanelController;
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
+
 import controller.MainController;
 import model.MainModel;
-import model.ShapeModel;
-
-import java.awt.*;
 
 public class MainFrame extends JFrame {
 
@@ -18,7 +17,7 @@ public class MainFrame extends JFrame {
 
         ToolbarPanel toolbarPanel = new ToolbarPanel(model.getShapeMakerModel(), controller.getToolbarController());
         DrawPanel drawPanel = new DrawPanel(model.getShapeModel(), controller.getDrawPanelController());
-        drawPanel.setComponentPopupMenu(new AttributePopUpMenu(model.getAttributeModel(), controller.getAttributeController()));
+        drawPanel.setComponentPopupMenu(new ShapePopUpMenu(model.getAttributeModel(), controller.getShapeOptionController()));
 
         this.add(toolbarPanel, BorderLayout.WEST);
         this.add(drawPanel, BorderLayout.CENTER);

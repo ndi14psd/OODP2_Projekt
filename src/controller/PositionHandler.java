@@ -1,12 +1,12 @@
 package controller;
 
-import model.DrawableShape;
-import model.ShapeModel;
-import shape.Vertex;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import model.DrawableShape;
+import model.ShapeModel;
+import shape.Vertex;
 
 final class PositionHandler {
 

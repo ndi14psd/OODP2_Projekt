@@ -1,20 +1,12 @@
 package controller;
 
-import java.awt.Color;
-
-import model.DrawableShape;
 import model.MainModel;
-import model.ShapeFileWriter;
-import model.ShapeModel;
-import shape.Circle;
-import shape.ShapeComposite;
-import shape.Vertex;
 
 public class MainController {
 	
 	private final ToolbarController toolbarController;
 	private final DrawPanelController drawPanelController;
-	private final AttributeController attributeController;
+	private final ShapeOptionController attributeController;
 	private final MainModel model;
 	private final CommandHistory history;
 	
@@ -23,7 +15,7 @@ public class MainController {
 		history = new CommandHistory();
 		drawPanelController = new DrawPanelController(model.getShapeModel(), model.getAttributeModel(), history);
 		toolbarController = new ToolbarController(model, this);
-		attributeController = new AttributeController(model.getShapeModel(), model.getAttributeModel());
+		attributeController = new ShapeOptionController(model.getShapeModel(), model.getAttributeModel());
 	}
 	
 	MainModel getModel() {
@@ -38,7 +30,7 @@ public class MainController {
 		return drawPanelController;
 	}
 	
-	public AttributeController getAttributeController() {
+	public ShapeOptionController getShapeOptionController() {
 		return attributeController;
 	}
 	

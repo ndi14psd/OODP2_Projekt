@@ -6,7 +6,8 @@ import java.util.Map;
 
 public final class Vertex implements Serializable {
 
-    private final double x;
+	private static final long serialVersionUID = -4797854415705807873L;
+	private final double x;
     private final double y;
 
     private final static Map<Double, Map<Double, Vertex>> CACHE = new HashMap<>();

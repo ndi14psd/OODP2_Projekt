@@ -1,8 +1,5 @@
 package controller;
 
-import java.util.Optional;
-
-import model.DrawableShape;
 import shape.Vertex;
 
 final class SelectOneState implements DrawPanelState {

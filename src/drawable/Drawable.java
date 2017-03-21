@@ -1,6 +1,6 @@
 package drawable;
 
-import java.awt.*;
+import java.awt.Graphics;
 
 @FunctionalInterface
 public interface Drawable {

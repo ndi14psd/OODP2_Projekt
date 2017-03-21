@@ -1,11 +1,9 @@
 package view;
 
-import controller.DrawPanelController;
+import javax.swing.SwingUtilities;
+
 import controller.MainController;
 import model.MainModel;
-import model.ShapeModel;
-
-import javax.swing.*;
 
 public class Program {
     public static void main(String[] args) {

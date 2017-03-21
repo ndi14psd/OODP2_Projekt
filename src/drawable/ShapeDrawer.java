@@ -1,11 +1,13 @@
 package drawable;
 
+import java.awt.Graphics;
+
 import shape.Circle;
+import shape.Rectangle;
 import shape.Shape;
 import shape.ShapeComposite;
 import shape.ShapeVisitor;
-
-import java.awt.*;
+import shape.Square;
 
 public final class ShapeDrawer implements ShapeVisitor {
 
@@ -22,7 +24,7 @@ public final class ShapeDrawer implements ShapeVisitor {
     @Override
     public void visit(ShapeComposite composite) {
         for (Shape shape : composite.getList()) {
-            shape.accept(new ShapeDrawer(graphics));
+            shape.accept(this);
         }
     }
 
@@ -33,5 +35,19 @@ public final class ShapeDrawer implements ShapeVisitor {
         int y = (int) (circle.getCenter().y() - circle.getRadius());
         graphics.drawOval(x, y, diameter, diameter);
     }
+
+	@Override
+	public void visit(Square square) {
+        int x = (int) (square.getCenter().x() - square.getSide() / 2);
+        int y = (int) (square.getCenter().y() - square.getSide() / 2);
+        graphics.drawRect(x, y, (int) square.getSide(), (int) square.getSide());
+	}
+
+	@Override
+	public void visit(Rectangle rectangle) {
+		int x = (int) (rectangle.getCenter().x() - rectangle.getWidth() / 2);
+        int y = (int) (rectangle.getCenter().y() - rectangle.getHeight() / 2);
+        graphics.drawRect(x, y, (int) rectangle.getWidth(), (int) rectangle.getHeight());
+	}
 
 }
