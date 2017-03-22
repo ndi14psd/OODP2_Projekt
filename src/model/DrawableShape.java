@@ -8,11 +8,12 @@ import java.util.List;
 
 import drawable.Drawable;
 import drawable.ShapeDrawer;
+import shape.Circle;
 import shape.Shape;
 import shape.ShapeVisitor;
 import shape.Vertex;
 
-public final class DrawableShape implements Drawable, Shape {
+public final class DrawableShape implements Drawable, Shape, Cloneable {
 	private static final long serialVersionUID = -5101707247175075539L;
 	
 	private Shape shape;
@@ -27,10 +28,15 @@ public final class DrawableShape implements Drawable, Shape {
         isSelected = false;
     }
     
-    public DrawableShape(DrawableShape drawableShape) {
+    private DrawableShape(DrawableShape drawableShape) {
     	this(drawableShape.shape);
     	this.color = drawableShape.color;
     	this.strokeWidth = drawableShape.strokeWidth;
+    }
+    
+    @Override
+    public DrawableShape clone() {
+    	return new DrawableShape(this);
     }
     
 	public void setInnerShape(Shape shape) {

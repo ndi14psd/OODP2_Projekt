@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import shape.Shape;
@@ -12,21 +13,21 @@ import shape.Shape;
 public class ShapePropertyModel extends Observable {
 
 	private DrawableShape currentShape;
-	private Map<String, Function<Double, Shape>> shapeProperties;
+	private Map<String, Consumer<Double>> shapeProperties;
 
 	public ShapePropertyModel() {
 		currentShape = null;
 		shapeProperties = new HashMap<>();
 	}
 
-	public Shape getUpdatedProperty(String propertyName, double value) {
-		return shapeProperties.get(propertyName).apply(value);
+	public void uppdateProperty(String propertyName, double value) {
+		shapeProperties.get(propertyName).accept(value);
 	}
 
 	public void setShape(DrawableShape shape) {
-		currentShape = shape;
-		shapeProperties = ShapePropertyCreator.get(shape);
-		updateObservers();
+			currentShape = shape;
+			shapeProperties = ShapePropertyCreator.get(shape);
+			updateObservers();
 	}
 
 	public Set<String> getShapeProperties() {

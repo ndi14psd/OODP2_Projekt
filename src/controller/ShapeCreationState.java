@@ -1,6 +1,6 @@
 package controller;
 
-import controller.command.AddShapeCommand;
+import controller.command.AddShape;
 import controller.command.Command;
 import model.DrawableShape;
 import model.MainModel;
@@ -22,7 +22,7 @@ public class ShapeCreationState implements DrawPanelState {
 	public void leftMouseButtonPressed(int x, int y) {
 		Vertex currentPosition = Vertex.at(x, y);
 		DrawableShape shape = model.getShapeMakerModel().getShape(shapeName, currentPosition);
-		Command added = new AddShapeCommand(model.getShapeModel(), shape);
+		Command added = new AddShape(model.getShapeModel(), shape);
 		added.execute();
 		history.addToHistory(added);
 	}

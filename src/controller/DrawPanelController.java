@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 
 import controller.command.Command;
 import controller.command.CommandComposite;
-import controller.command.DeleteShapeCommand;
-import controller.command.MoveShapeCommand;
+import controller.command.DeleteShape;
+import controller.command.MoveShape;
 import model.DrawableShape;
 import model.ShapeModel;
 import model.ShapePropertyModel;
@@ -32,7 +32,7 @@ public final class DrawPanelController {
     void addMovementToHistory(List<DrawableShape> shapes, Vertex distance) {
         if(distance != Vertex.at(0, 0)) {
             List<Command> commands = shapes.stream()
-                    .map(s ->  new MoveShapeCommand(shapeModel, s, distance))
+                    .map(s ->  new MoveShape(shapeModel, s, distance))
                     .collect(Collectors.toList());
             history.addToHistory(new CommandComposite(commands));
         }
@@ -45,7 +45,7 @@ public final class DrawPanelController {
     public void deleteSelected() {
     	List<DrawableShape> selected = handler.getSelected();
     	if(!selected.isEmpty()) {
-    		Command deleteSelected = new DeleteShapeCommand(shapeModel, selected);
+    		Command deleteSelected = new DeleteShape(shapeModel, selected);
     		deleteSelected.execute();
     		history.addToHistory(deleteSelected);    		
     	}

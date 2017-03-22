@@ -16,7 +16,7 @@ class ShapePopUpMenu extends JPopupMenu implements Observer {
 
 	private ShapePropertyModel model;
 	private ShapeOptionController controller;
-	
+
 	public ShapePopUpMenu(ShapePropertyModel model, ShapeOptionController controller) {
 		this.model = model;
 		this.controller = controller;
@@ -26,29 +26,32 @@ class ShapePopUpMenu extends JPopupMenu implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		this.removeAll();
-		
-		JMenuItem colorItem = new JMenuItem("Change color");
-		colorItem.addActionListener(action -> {
-			Color c = JColorChooser.showDialog(this, "Choose Color", Color.BLACK);
-			controller.setShapeColor(c);
-		});
-		add(colorItem);
-		
-		JMenuItem strokeItem = new JMenuItem("Change Stroke width");
-		strokeItem.addActionListener(action -> {
-			String input = JOptionPane.showInputDialog("Choose new stroke width");
-			controller.setShapeStrokeWidth(input);
-		});
-		add(strokeItem);
-		
-		for (String option : model.getShapeProperties()) {
-			JMenuItem item = new JMenuItem(option);
-			item.addActionListener(action -> {
-				controller.executeShapeOption(option, JOptionPane.showInputDialog("Change value"));
+
+		if (model.getShape().isPresent()) {
+
+			JMenuItem colorItem = new JMenuItem("Change color");
+			colorItem.addActionListener(action -> {
+				Color c = JColorChooser.showDialog(this, "Choose Color", Color.BLACK);
+				controller.setShapeColor(c);
 			});
-			add(item);
+			add(colorItem);
+
+			JMenuItem strokeItem = new JMenuItem("Change Stroke width");
+			strokeItem.addActionListener(action -> {
+				String input = JOptionPane.showInputDialog("Choose new stroke width");
+				controller.setShapeStrokeWidth(input);
+			});
+			add(strokeItem);
+
+			for (String option : model.getShapeProperties()) {
+				JMenuItem item = new JMenuItem(option);
+				item.addActionListener(action -> {
+					String input = JOptionPane.showInputDialog("Change value");
+					controller.changeShapeProperty(option, input);
+				});
+				add(item);
+			}
 		}
 	}
-
 
 }

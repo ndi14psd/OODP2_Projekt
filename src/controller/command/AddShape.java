@@ -3,12 +3,12 @@ package controller.command;
 import model.DrawableShape;
 import model.ShapeModel;
 
-public class AddShapeCommand implements Command {
+public class AddShape implements Command {
 
 	private final ShapeModel model;
 	private final DrawableShape shape;
 
-	public AddShapeCommand(ShapeModel model, DrawableShape shape) {
+	public AddShape(ShapeModel model, DrawableShape shape) {
 		this.model = model;
 		this.shape = shape;
 	}

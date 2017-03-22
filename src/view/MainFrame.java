@@ -15,8 +15,8 @@ public class MainFrame extends JFrame {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
 
-        ToolbarPanel toolbarPanel = new ToolbarPanel(model.getShapeMakerModel(), controller.getToolbarController());
         DrawPanel drawPanel = new DrawPanel(model.getShapeModel(), controller.getDrawPanelController());
+        ToolbarPanel toolbarPanel = new ToolbarPanel(model.getShapeMakerModel(), controller.getToolbarController(), drawPanel);
         drawPanel.setComponentPopupMenu(new ShapePopUpMenu(model.getAttributeModel(), controller.getShapeOptionController()));
 
         this.add(toolbarPanel, BorderLayout.WEST);

@@ -16,11 +16,10 @@ public class ShapeOptionController {
 		this.optionModel = optionModel;
 	}
 	
-	public void executeShapeOption(String option, String value) {
+	public void changeShapeProperty(String property, String value) {
 		optionModel.getShape().ifPresent(shape -> {
 			double val = Double.valueOf(value);
-			Shape updatedProperty = optionModel.getUpdatedProperty(option, val);
-			shapeModel.updateShape(shape, s -> s.setInnerShape(updatedProperty));
+			shapeModel.updateShape(shape, s -> optionModel.uppdateProperty(property, val));
 		});
 	}
 

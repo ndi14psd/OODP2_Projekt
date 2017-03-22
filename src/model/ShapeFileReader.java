@@ -22,7 +22,7 @@ public final class ShapeFileReader {
 
 	private void initializeShapeMakers(String directoryName) {
 		File directory = new File(directoryName);
-		if (directory.isDirectory() && directory.listFiles().length > 1) {
+		if (directory.isDirectory()) {
 			for (File file : directory.listFiles()) {
 				try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
 					String shapeName = file.getName();
@@ -36,14 +36,6 @@ public final class ShapeFileReader {
 
 	public DrawableShape getShapeMaker(String shapeName) {
 		return shapeMakers.get(shapeName);
-	}
-
-	private DrawableShape readShapeFromFile(File file) {
-		try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
-			return (DrawableShape) in.readObject();
-		} catch (IOException | ClassNotFoundException e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 }

@@ -15,21 +15,20 @@ import shape.Square;
 
 class ShapePropertyCreator implements ShapeVisitor {
 
-	private ShapeModel model;
 	private DrawableShape shape;
 	
-	private final Map<String, Function<Double, Shape>> options;
+	private final Map<String, Consumer<Double>> options;
 	
 	private ShapePropertyCreator(DrawableShape shape) {
-		this.model = model;
 		this.shape = shape;
 		options = new HashMap<>();
 	}
 
-	static Map<String, Function<Double, Shape>> get(DrawableShape shape) {
+	static Map<String, Consumer<Double>> get(DrawableShape shape) {
 		ShapePropertyCreator creator = new ShapePropertyCreator(shape);
-		shape.accept(creator);
-		
+		if(shape != null) {
+			shape.accept(creator);			
+		}
 		
 		return creator.options;
 	}
@@ -40,17 +39,18 @@ class ShapePropertyCreator implements ShapeVisitor {
 
 	@Override
 	public void visit(Circle circle) {
-		options.put("Radius", input -> Circle.get(circle.getCenter(), input));
+		options.put("Radius", input -> shape.setInnerShape(Circle.get(circle.getCenter(), input)));
 	}
 
 	@Override
 	public void visit(Square square) {
-		
+		options.put("Side", input -> shape.setInnerShape(new Square(square.getCenter(), input)));
 	}
 
 	@Override
 	public void visit(Rectangle rectangle) {
-		
+		options.put("Width", input -> shape.setInnerShape(new Rectangle(shape.getCenter(), input, rectangle.getHeight())));
+		options.put("Height", input -> shape.setInnerShape(new Rectangle(shape.getCenter(), rectangle.getWidth(), input)));
 	}
 	
 	

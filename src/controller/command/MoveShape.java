@@ -4,13 +4,13 @@ import model.DrawableShape;
 import model.ShapeModel;
 import shape.Vertex;
 
-public class MoveShapeCommand implements Command {
+public class MoveShape implements Command {
 
     private final ShapeModel model;
     private final DrawableShape shape;
     private final Vertex distance;
 
-    public MoveShapeCommand(ShapeModel model, DrawableShape shape, Vertex distance) {
+    public MoveShape(ShapeModel model, DrawableShape shape, Vertex distance) {
         this.model = model;
         this.shape = shape;
         this.distance = distance;
