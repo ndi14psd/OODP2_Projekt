@@ -55,7 +55,9 @@ public class ToolbarPanel extends JPanel implements Observer {
 			buttons.add(getCreationButton(name));
 		}		
 		
-		buttons.forEach(this::add);
+		for (JButton button : buttons) {
+			add(button);
+		}
 		revalidate();
 	}
 	

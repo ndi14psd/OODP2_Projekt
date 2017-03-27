@@ -24,19 +24,16 @@ public final class DrawableShape implements Drawable, Shape, Cloneable {
     public DrawableShape(Shape shape) {
         this.shape = shape;
         strokeWidth = 5;
-        color = Color.BLACK;
+        color = Color.black;
         isSelected = false;
-    }
-    
-    private DrawableShape(DrawableShape drawableShape) {
-    	this(drawableShape.shape);
-    	this.color = drawableShape.color;
-    	this.strokeWidth = drawableShape.strokeWidth;
     }
     
     @Override
     public DrawableShape clone() {
-    	return new DrawableShape(this);
+    	DrawableShape clone =  new DrawableShape(shape);
+    	clone.color = this.color;
+    	clone.strokeWidth = this.strokeWidth;
+    	return clone;
     }
     
 	public void setInnerShape(Shape shape) {

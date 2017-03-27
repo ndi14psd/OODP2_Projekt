@@ -1,15 +1,9 @@
 package model;
 
-import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.function.Consumer;
-
-import shape.Circle;
-import shape.ShapeComposite;
-import shape.ShapeFactory;
-import shape.Vertex;
 
 public class ShapeModel extends Observable {
 
@@ -17,17 +11,6 @@ public class ShapeModel extends Observable {
 
     public ShapeModel() {
         shapes = new LinkedList<>();
-        addShape(new DrawableShape(ShapeFactory.getCircle(Vertex.at(400, 300), 100)));
-        ShapeComposite composite = new ShapeComposite();
-        composite.addShape(Circle.get(Vertex.at(200, 200), 50));
-        composite.addShape(Circle.get(Vertex.at(100, 100), 50));
-        composite.addShape(Circle.get(Vertex.at(500, 300), 50));
-        addShape(new DrawableShape(ShapeFactory.getCircle(Vertex.at(200, 200), 100)));
-        addShape(new DrawableShape(ShapeFactory.getCircle(Vertex.at(700, 100), 100)));
-        DrawableShape drawableComposite = new DrawableShape(composite);
-        drawableComposite.setColor(Color.BLUE);
-
-        addShape(drawableComposite);
     }
 
     public List<DrawableShape> getShapes() {

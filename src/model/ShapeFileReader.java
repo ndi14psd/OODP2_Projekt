@@ -9,33 +9,35 @@ import java.util.Map;
 
 public final class ShapeFileReader {
 
-	private final Map<String, DrawableShape> shapeMakers;
+	private final Map<String, DrawableShape> shapes;
 
 	private ShapeFileReader(String directoryName) {
-		shapeMakers = new HashMap<>();
+		shapes = new HashMap<>();
 		initializeShapeMakers(directoryName);
 	}
 
 	public static Map<String, DrawableShape> readDirectory(String directoryName) {
-		return new ShapeFileReader(directoryName).shapeMakers;
+		return new ShapeFileReader(directoryName).shapes;
 	}
 
 	private void initializeShapeMakers(String directoryName) {
 		File directory = new File(directoryName);
 		if (directory.isDirectory()) {
 			for (File file : directory.listFiles()) {
-				try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
-					String shapeName = file.getName();
-					shapeMakers.put(shapeName, (DrawableShape) in.readObject());
-				} catch (IOException | ClassNotFoundException e) {
-					throw new RuntimeException(e);
+				if(file.getName().contains(".ser")) {
+					readShapeObject(file);					
 				}
 			}
 		}
 	}
 
-	public DrawableShape getShapeMaker(String shapeName) {
-		return shapeMakers.get(shapeName);
+	public void readShapeObject(File file) {
+		try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
+			String shapeName = file.getName();
+			shapes.put(shapeName, (DrawableShape) in.readObject());
+		} catch (IOException | ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

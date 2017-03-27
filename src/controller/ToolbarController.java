@@ -59,7 +59,11 @@ public class ToolbarController {
 			BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 			painter.accept(img.createGraphics());
 			try {
-				ImageIO.write(img, "png", new File("img/" + fileName + ".png"));
+				File saveDirectory = new File("img/");
+				if(!saveDirectory.exists()) {
+					saveDirectory.mkdirs();
+				}
+				ImageIO.write(img, "png", new File(saveDirectory, fileName + ".png"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

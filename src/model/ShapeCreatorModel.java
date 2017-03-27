@@ -29,17 +29,21 @@ public class ShapeCreatorModel extends Observable {
 		super.notifyObservers();
 	}
 	
-	public void reinitialize() {
+	private void reinitializeShapes() {
 		defaultShapeMakers.clear();
 		customShapeMakers.clear();
 		initializeDefault();
 		initializeFromFiles();
+	}
+	
+	public void reinitialize() {
+		reinitializeShapes();
 		updateObservers();
 	}
 	
 	public DrawableShape getShape(String shapeName, Vertex position) {
 		DrawableShape shape = defaultShapeMakers.getOrDefault(shapeName, customShapeMakers.get(shapeName)).apply(position);
-		reinitialize();
+		reinitializeShapes();
 		return shape;
 	}
 	
